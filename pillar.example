@@ -123,7 +123,9 @@ nagios:
     pid_file: /var/run/nagios/nrpe.pid
     user: nagios 
     group: nagios
-    allowed_hosts: 127.0.0.1
+    allowed_hosts:
+      - 127.0.0.1
+      - 192.168.0.1
     command_timeout: 60
     connection_timeout: 300
     dont_blame_nrpe: 0
@@ -137,12 +139,17 @@ nagios:
     client:
       password: s3crIt
       encryption_method: 1
+  plugins:
+    extra_pkgs:
+      - nagios-plugins-contrib
   lookup:
     nagios:
       plugins: nagios-plugins
       server: nagios3
       service: nagios3
       dynamic_cfg_dir: /etc/nagios3/dynamic/
+      macro_users:
+        USER3: "'s3crIt'"
     nrpe:
       cfg_dir: /etc/nagios/nrpe.d/
       group: nagios
